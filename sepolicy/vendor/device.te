@@ -15,3 +15,6 @@ type vendor_radio_smd_device, dev_type;
 
 # Touchscreen
 type touchfeature_device, dev_type;
+
+# Sensors
+type vendor_udals_rgb_device, dev_type;

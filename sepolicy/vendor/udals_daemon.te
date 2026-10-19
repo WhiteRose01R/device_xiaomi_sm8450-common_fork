@@ -1,0 +1,27 @@
+type vendor_udals_daemon, domain;
+type vendor_udals_daemon_exec, exec_type, vendor_file_type, file_type;
+
+init_daemon_domain(vendor_udals_daemon)
+
+# Allow writing to /dev/udals_rgb
+allow vendor_udals_daemon vendor_udals_rgb_device:{ file chr_file } rw_file_perms;
+
+# Allow vendor_init to create and label /dev/udals_rgb on post-fs
+file_type_auto_trans(vendor_init, device, vendor_udals_rgb_device, file)
+allow vendor_init vendor_udals_rgb_device:file { relabelfrom relabelto };
+
+# Backlight sysfs
+allow vendor_udals_daemon sysfs_leds:dir r_dir_perms;
+allow vendor_udals_daemon sysfs_leds:file r_file_perms;
+
+# Display and allocator access
+allow vendor_udals_daemon graphics_device:chr_file rw_file_perms;
+allow vendor_udals_daemon gpu_device:chr_file rw_file_perms;
+allow vendor_udals_daemon ion_device:chr_file rw_file_perms;
+allow vendor_udals_daemon dmabuf_system_heap_device:chr_file r_file_perms;
+
+hal_client_domain(vendor_udals_daemon, hal_graphics_composer)
+hal_client_domain(vendor_udals_daemon, hal_graphics_allocator)
+allow vendor_udals_daemon vendor_displayfeature_device:chr_file rw_file_perms;
+
+neverallow appdomain vendor_udals_rgb_device:{ file chr_file } *;

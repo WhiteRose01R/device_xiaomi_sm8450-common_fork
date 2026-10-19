@@ -20,6 +20,7 @@ allow vendor_sensor_notifier vendor_persist_sensors_file:file r_file_perms;
 allow vendor_sensor_notifier vendor_sysfs_displayfeature:dir { search read open getattr };
 allow vendor_sensor_notifier vendor_sysfs_displayfeature:file { read open getattr };
 allow vendor_sensor_notifier vendor_sysfs_sensors:file r_file_perms;
+allow vendor_sensor_notifier vendor_udals_rgb_device:{ file chr_file } r_file_perms;
 
 # for libssccalapi@2.0
 allow vendor_sensor_notifier self:{ socket qipcrtr_socket} create_socket_perms;
